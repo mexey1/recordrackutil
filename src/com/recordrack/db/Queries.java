@@ -6,7 +6,10 @@ import com.recordrack.ui.RecordRackAlert;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-
+/**
+ * This class contains methods for interar=cting with the database. Internally, all method calls to the DatabaseManager
+ * class are on the database thread
+ */
 public class Queries
 {
     /**

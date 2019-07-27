@@ -8,6 +8,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Class containing methods for formatting date data
+ */
 public class DateUtil
 {
     public static Date getCurrentDate()

@@ -5,6 +5,9 @@ import javafx.beans.property.StringProperty;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Class that backs profit/loss row data.
+ */
 public class ProfitLossRowItem implements RowItem
 {
     private String storedUnit;

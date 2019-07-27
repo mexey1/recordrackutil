@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="RecordRack">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/RecordRack/mysql-connector-java-8.0.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/RecordRack/json-20180813.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/artifacts/RecordRack/RecordRack.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

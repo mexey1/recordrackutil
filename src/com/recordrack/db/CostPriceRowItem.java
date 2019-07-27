@@ -5,7 +5,9 @@ import javafx.beans.property.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
+/**
+ * This class is responsible for displaying table cell items for cost price related data
+ */
 public class CostPriceRowItem implements RowItem
 {
     private String storedUnit;
@@ -59,16 +61,28 @@ public class CostPriceRowItem implements RowItem
         }
     }
 
+    /**
+     * getter method for retrieving the new unit cost value
+     * @return the string value for unit cost
+     */
     public String getNewUnitCost()
     {
         return newUnitCost;
     }
 
+    /**
+     * method to that computes total cost value using the new quantity value and new unit cost
+     * @return a simple string property object for binding to listen to result changes
+     */
     private SimpleStringProperty computeTotalCost()
     {
         return new SimpleStringProperty(Double.toString(Double.parseDouble(newQuantity)*Double.parseDouble(newUnitCost)));
     }
 
+    /**
+     * method to compute cost value if there's a change to either new unit cost value or new quantity value
+     * @return
+     */
     private double computeCostValue()
     {
         Double nuc = Double.parseDouble(newUnitCost);
@@ -88,6 +102,10 @@ public class CostPriceRowItem implements RowItem
         return val;
     }
 
+    /**
+     * this method is called to set new unit cost value that is entered by the user
+     * @param newUnitCost the string representation of the cost value entered
+     */
     public void setNewUnitCost(String newUnitCost)
     {
         /*Double nuc = Double.parseDouble(newUnitCost);
@@ -101,31 +119,57 @@ public class CostPriceRowItem implements RowItem
         totalCost = computeTotalCost();
     }
 
+    /**
+     * method to retrieve the cost value
+     * @return cost value
+     */
     public double getCostValue()
     {
         return costValue;
     }
 
+    /**
+     * method called to retrieve the category id for this item
+     * @return string representation of the category id value
+     */
     public String getCategoryID()
     {
         return categoryID;
     }
 
+    /**
+     * method called to set the quantity for this item
+     * @param quantity the quantity value
+     */
     public void setQuantity(String quantity)
     {
         this.quantity = quantity;
     }
+
+    /**
+     * method to retrieve the new quantity value
+     * @return new quantity value
+     */
     public String getNewQuantity()
     {
         return newQuantity;
     }
 
+    /**
+     * method to set the new quantity value. It internally calls the computeCostValue() and computeTotalCost() methods
+     * @param newQuantity the new quantity value to set
+     */
     public void setNewQuantity(String newQuantity)
     {
         this.newQuantity = newQuantity;
         costValue = computeCostValue();
         totalCost = computeTotalCost();
     }
+
+    /**
+     * method to get the stored unit value of this item
+     * @return the stored unit value
+     */
     public String getStoredUnit()
     {
         return storedUnit;

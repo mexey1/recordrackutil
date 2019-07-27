@@ -3,6 +3,9 @@ package com.recordrack.db;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Class that backs an income row data in a table
+ */
 public class IncomeRowItem
 {
     private String name;

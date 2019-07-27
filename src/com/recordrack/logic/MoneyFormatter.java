@@ -4,6 +4,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 
+/**
+ * Class that contains methods for formatting string into money format and vice-versa
+ */
 public class MoneyFormatter
 {
     public static double unFormatMoney(String money)

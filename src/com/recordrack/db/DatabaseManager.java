@@ -9,10 +9,19 @@ import org.json.JSONObject;
 
 import java.sql.*;
 
+/**
+ * Class to manage database connections and contains methods that handles all database interactions. All interactions
+ * with this class is done on the DatabaseThread to free the UI thread from performing any long running database
+ */
 public class DatabaseManager
 {
+
     private static Connection con;
     private static DatabaseManager dbManager;
+
+    /**
+     * method called to initialize database connection.
+     */
     private void init()
     {
         try
@@ -38,6 +47,11 @@ public class DatabaseManager
         }
     }
 
+    /**
+     * method called to fetch data
+     * @param query the query to execute
+     * @return a JSONArray containing the result of the query.
+     */
     public static JSONArray fetchData(String query)
     {
         //System.out.println(con);
@@ -46,7 +60,6 @@ public class DatabaseManager
             dbManager = new DatabaseManager();
             dbManager.init();
         }
-
 
         int columnCount = 0;
         JSONArray array = new JSONArray();

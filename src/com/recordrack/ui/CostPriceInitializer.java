@@ -21,13 +21,12 @@ import org.json.JSONArray;
 
 import javax.management.Query;
 
+/**
+ * CostPriceInitializer is the first scene that shows up when the user runs the program for the first time. It provides
+ * UI components for defining the cost price of each item in the record-rack database
+ */
 public class CostPriceInitializer
 {
-    /**
-     * CostPriceInitializer is the first scene that shows up when the user runs the program for the first time. It provides
-     * UI components for defining the cost price of each item in the record-rack database
-     */
-
     protected VBox vBox = null;
     protected TableView<CostPriceRowItem> tableView;
     protected Queries queries;
