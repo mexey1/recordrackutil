@@ -1,6 +1,13 @@
 package com.recordrack.ui;
 
+import com.recordrack.db.DatabaseThread;
+import com.recordrack.db.Queries;
+import com.recordrack.db.ThreadPool;
+import com.recordrack.interfaces.QueryResultListener;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,14 +24,83 @@ import javafx.stage.Stage;
 
 public class Main extends Application
 {
+    private Queries queries;
+    private Stage stage;
+    private static Main main;
+
+    @Override
     public void start(Stage stage)
     {
-        Scene scene = new Scene(createStage(),400,400);
-        stage.setScene(scene);
-        stage.show();
 
+        this.stage = stage;
+        System.out.println("Getting current quantities");
+        main = this;
+        displayFirstScene();
     }
 
+    @Override
+    public void init()
+    {
+        queries = new Queries();
+        queries.setTimeZone();
+    }
+
+    private void displayFirstScene()
+    {
+        //first, we'd check if the cost_price table exists. If it doesn't exist, then this is the first time the user is
+        //running the application and no commits have been made, else, we show the second scene as user must have inserted
+        //cost price
+        queries.checkIfTableExists("cost_price",new QueryResultListener<Integer>()
+        {
+            @Override
+            public void doAction(Integer result)
+            {
+                Platform.runLater(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        if(result>0)//if the table exists
+                        {
+
+                            createMainScene();
+                            stage.show();
+                        }
+                        else
+                        {
+                            stage.setScene(new CostPriceInitializer(false).getCostPriceScene());
+                            stage.show();
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+    public static Main getInstance()
+    {
+        return main;
+    }
+
+    public void createMainScene()
+    {
+        Scene scene = new Scene(createStage(),700,500);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @Override
+    public void stop()
+    {
+        ThreadPool.getInstance().shutdown();
+        DatabaseThread.getInstance().shutdown();
+    }
+
+    /**
+     * if user has created and saved cost prices, then this method would be called
+     * @return returns the parent node object
+     */
     private Parent createStage()
     {
         TabPane tabPane = new TabPane();
@@ -32,49 +108,54 @@ public class Main extends Application
 
         //tabPane.setTabPWidth(Double.MAX_VALUE);
         createTabs(tabPane);
-
-
         return tabPane;
     }
 
+
+    /**
+     * method called from createStage method to create the tabs
+     * @param tabPane the tabpane that needs to be populated
+     */
     private void createTabs(TabPane tabPane)
     {
         String [] buttons = new String[]{"Add cost price", "View profits"};
 
-        for (String b: buttons)
+        for (int i=0;i<buttons.length;i++)
         {
             Tab tab = new Tab();
             //tab.setStyle();
-            tab.setText(b);
-            setTabScene(tab);
+            tab.setText(buttons[i]);
+            if(i==0)
+                setItemSearchTab(tab);
+            else if(i==1)
+                setProfitLossTab(tab);
             tabPane.getTabs().add(tab);
         }
     }
 
-    private void setTabScene(Tab tab)
+    /**
+     * this method defines the UI the user would see in the Add cost price tab
+     * @param tab the tab to whih the ui components are to be added to
+     */
+    private void setItemSearchTab(Tab tab)
     {
-        Image image = new Image(getClass().getResourceAsStream("/resources/search.png"),60,60,true,false);
-        BorderPane bPane = new BorderPane();
-        bPane.setPrefSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        ItemSearchView itemSearchView = new ItemSearchView();
+        tab.setContent(itemSearchView.getSceneParentNode());
+    }
 
-        HBox hBox = new HBox();
-        hBox.setPrefWidth(Double.MAX_VALUE);
-        //hBox.setStyle("-fx-background-color: #ffd700");
-        hBox.setPadding(new Insets(10,10,10,10));
-        hBox.setSpacing(10);
-        TextField searchField = new TextField();
-        searchField.setPrefColumnCount(100);
+    private void setProfitLossTab(Tab tab)
+    {
+        ProfitAndLossViewer profitAndLossViewer = new ProfitAndLossViewer();
+        tab.setContent(profitAndLossViewer.getUiNode());
+    }
 
+    /**
+     * this method is called to initialize the search field. It sets up a listener for text changes and calls
+     *
+     * @param field the search field to be initialized
+     */
+    private void initSearchField(TextField field)
+    {
 
-        ImageView imageView = new ImageView();
-        imageView.setImage(image);
-        imageView.setFitWidth(30);
-        imageView.setFitHeight(30);
-        imageView.setPreserveRatio(true);
-        hBox.getChildren().addAll(imageView,searchField);
-
-
-        bPane.setTop(hBox);
-        tab.setContent(bPane);
     }
 }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="RecordRack.jnlp">
+  <information>
+    <title>RecordRack</title>
+    <vendor>Gecko Solutions</vendor>
+    <description>This application helps current users of RR to set cost price values as well as view profit/loss for items being sold</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="RecordRack.jar" size="109860" download="eager" />
+    <jar href="json-20180813.jar" size="64597" download="eager" />
+    <jar href="mysql-connector-java-8.0.16.jar" size="2293144" download="eager" />
+  </resources>
+  <jfx:javafx-desc  width="800" height="500" main-class="com.recordrack.ui.Main"  name="RecordRack" />
+  <update check="background"/>
+</jnlp>

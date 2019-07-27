@@ -1,0 +1,24 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="RecordRack">
+    <output-path>$PROJECT_DIR$/out/artifacts/RecordRack</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="com.recordrack.ui.Main" />
+        <option name="description" value="This application helps current users of RR to set cost price values as well as view profit/loss for items being sold" />
+        <option name="height" value="500" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="RecordRack" />
+        <option name="vendor" value="Gecko Solutions" />
+        <option name="version" value="1.0" />
+        <option name="width" value="800" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="RecordRack.jar">
+        <element id="module-output" name="RecordRack" />
+        <element id="library" level="project" name="json-20180813" />
+        <element id="library" level="project" name="mysql-connector-java-8.0.16" />
+      </element>
+    </root>
+  </artifact>
+</component>
